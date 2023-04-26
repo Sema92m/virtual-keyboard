@@ -10,16 +10,18 @@ body {
     justify-content: center;
     align-items: center;
 }
-
+h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
 .main {
-    width: 1124px;
-    margin: auto;
+    max-width: 1124px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
     padding: 30px;
+    border-radius: 5px;
     background: lightgray;
 }
 .text-area {
@@ -30,6 +32,7 @@ body {
     align-items: center;
     font-size: 20px;
     background: #fff3f3;
+    border-radius: 5px;
 }
 .keyboard {
     display: flex;
@@ -61,7 +64,7 @@ button::before {
 
 button:hover {
     background-color: #dcdddc;
-    /* font-size: 35px; */
+    transform: scale(1.02);
 }
 
 button:active {
@@ -70,20 +73,59 @@ button:active {
     transform: translate(1px, 1px);
 }
 .active {
-  background-color: #8b8c8b;
-  box-shadow: 2px 2px 2px #666;
-  transform: translate(1px, 1px);
+    background-color: #8b8c8b;
+    box-shadow: 2px 2px 2px #666;
+    transform: translate(1px, 1px);
 }
 
-#Backspace {
+#Backspace,
+#ShiftLeft,
+#ShiftRight {
     width: 120px;
     font-size: 15px;
 }
 
-/* #del {
-    width: 75px;
-} */
-#Tab {
-    width: 75px;
-    /* grid-column: 14 / span 15; */
+#ControlLeft,
+#Win,
+#AltLeft,
+#AltRight,
+#ControlRight,
+#Tab,
+#Delete {
+    width: 70px;
+    font-size: 15px;
+}
+
+#Space {
+    width: 450px;
+    font-size: 15px;
+}
+
+#CapsLock {
+    width: 100px;
+    font-size: 15px;
+}
+
+#Enter {
+    width: 140px;
+    font-size: 15px;
+}
+
+
+.greenRound,
+.orangeRound {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    background-color: rgb(207, 207, 207);
+}
+
+#ShiftLeft:active .greenRound {
+    background-color: rgb(5, 177, 5);
+}
+#CapsLock:active .orangeRound {
+    background-color: rgb(237, 97, 47);
 }

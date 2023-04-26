@@ -8,25 +8,35 @@ function createKey(arr) {
         keyButton.innerText = `${arr[i].key}`;
         keyButton.classList.add("key");
         keyboard.appendChild(keyButton);
-        // if (arr[i].before) {
-
-        // }
     }
 }
 createKey(keyArr);
 
 document.addEventListener("keydown", (event) => {
     textArea.innerText += event.key;
-    // console.log(`You pressed the ${event.key} key with keyCode ${event.code}`);
     console.dir(event);
     console.log(document.querySelector(`#${event.code}`));
-    document.querySelector(`#${event.code}`).classList.add('active');
-    // for(let i = 0; i < keyArr.length; i++){
-    //   if(event.key === keyArr[i].key) {
-
-    //   }q
-    // }1
+    document.querySelector(`#${event.code}`).classList.add("active");
 });
 document.addEventListener("keyup", (event) => {
-    document.querySelector(`#${event.code}`).classList.remove('active');
+    document.querySelector(`#${event.code}`).classList.remove("active");
 });
+
+const greenRound = document.createElement("div");
+greenRound.classList.add("greenRound");
+
+const orangeRound = document.createElement("div");
+orangeRound.classList.add("orangeRound");
+
+
+try {
+    const shiftLeft = document.querySelector("#ShiftLeft");
+    shiftLeft.style.position = "relative";
+    shiftLeft.append(greenRound);
+    const capsLock = document.querySelector("#CapsLock");
+    capsLock.style.position = "relative";
+    capsLock.append(orangeRound);
+    // throw 'myException'; // создание исключения
+} catch (err) {
+    console.log(err);
+}
