@@ -2,6 +2,8 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    transition: transform 0.2s;
+    transition: background 0.3s;
 }
 
 body {
@@ -48,7 +50,8 @@ p {
     margin: 20px 0;
 }
 
-button {
+.btn {
+    position: relative;
     width: 60px;
     height: 60px;
     display: flex;
@@ -64,25 +67,37 @@ button {
     cursor: pointer;
 }
 
-button::before {
+.btn::before {
     content: var(--before-content);
 }
 
-button:hover {
+.btn:hover {
     background-color: #dcdddc;
     transform: scale(1.02);
 }
 
-button:active {
+.btn:active {
     background-color: #dcdddc;
     box-shadow: 1px 1px 1px #666;
     transform: translate(1px, 1px);
+}
+
+.key2 {
+    position: absolute;
+    font-size: 14px;
+    left: 5px;
+    top: 5px;
+    font-weight: 900;
 }
 
 .active {
     background-color: #dcdddc;
     box-shadow: 1px 1px 1px #666;
     transform: translate(1px, 1px);
+}
+#ArrowUp,#ArrowLeft,#ArrowDown,#ArrowRight {
+  background-color: #000;
+  color: #fff;
 }
 
 #Backspace,
@@ -98,6 +113,7 @@ button:active {
 #Space,
 #CapsLock,
 #Enter {
+    background-color: #a6a29a;
     font-size: 15px;
     font-weight: 800;
 }
@@ -120,6 +136,7 @@ button:active {
 }
 
 #Space {
+    background-color: #f8a64f;
     width: 450px;
 }
 
@@ -128,6 +145,7 @@ button:active {
 }
 
 #Enter {
+  background-color: #f8a64f;
     width: 140px;
 }
 
@@ -153,15 +171,13 @@ button:active {
 
 .flag {
     width: 50px;
-    height: 50px;
+    height: 40px;
     transform: translateX(160px);
-    background-image: url('./uk_flag.svg');
+    background-image: url("./uk_flag.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
 }
 .flag_pol {
-   
-    background-image: url('./pol_flag.svg');
-   
+    background-image: url("./pol_flag.svg");
 }
