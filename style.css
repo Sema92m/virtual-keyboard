@@ -150,3 +150,18 @@ button:active {
 .orange {
     background-color: rgb(252, 96, 39);
 }
+
+.flag {
+    width: 50px;
+    height: 50px;
+    transform: translateX(160px);
+    background-image: url('./uk_flag.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.flag_pol {
+   
+    background-image: url('./pol_flag.svg');
+   
+}

@@ -86,6 +86,7 @@ const keyArr = [
         id: "Tab",
         key: "Tab",
         keyCode: "9",
+        textContent: "Tab",
     },
     {
         id: "KeyQ",
@@ -289,20 +290,20 @@ const keyArr = [
         keyCode: "191",
     },
     {
-        id: "↑",
+        id: "ArrowUp",
         key: "ArrowUp",
         keyCode: "38",
         textContent: "↑",
     },
     {
         id: "ShiftRight",
-        key: "ShiftRight",
+        key: "Shift",
         keyCode: "16",
         textContent: "Shift",
     },
     {
         id: "ControlLeft",
-        key: "ControlLeft",
+        key: "Control",
         keyCode: "17",
         textContent: "Ctrl",
     },
@@ -314,7 +315,7 @@ const keyArr = [
     },
     {
         id: "AltLeft",
-        key: "AltLeft",
+        key: "Alt",
         keyCode: "18",
         textContent: "Alt",
         
@@ -327,32 +328,32 @@ const keyArr = [
     },
     {
         id: "AltRight",
-        key: "AltRight",
+        key: "Alt",
         keyCode: "18",
         textContent: "Alt",
     },
     {
         id: "ControlRight",
-        key: "ControlRight",
+        key: "Control",
         keyCode: "17",
         textContent: "Ctrl",
     },
     {
-        id: "←",
+        id: "ArrowLeft",
         key: "ArrowLeft",
         keyCode: "37",
         textContent: "←",
     },
     {
-        id: "↓",
+        id: "ArrowDown",
         key: "ArrowDown",
         keyCode: "40",
         textContent: "↓",
     },
     {
-        id: "→",
-        key: "ArrowRight",
+        id: "ArrowRight",
+        key: "→",
         keyCode: "39",
-        textContent: "→",
+        textContent: "qqq",
     },
 ];

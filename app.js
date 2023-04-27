@@ -2,6 +2,11 @@ const body = document.body;
 const mainSection = document.createElement("section");
 const keyboard = document.createElement("div");
 const textArea = document.createElement("textarea");
+const ukFlag = document.createElement("div");
+
+// ukFlag.src = "./uk_flag.svg";
+ukFlag.setAttribute('class', 'flag');
+
 
 const h1 = document.createElement("h1");
 h1.textContent = "Virtual Keyboard for Windows";
@@ -15,7 +20,7 @@ body.insertAdjacentElement("afterbegin", mainSection);
 textArea.setAttribute("rows", "5");
 textArea.setAttribute("cols", "46");
 textArea.setAttribute("wrap", "hard");
-// textArea.setAttribute("autofocus", "autofocus");
+textArea.setAttribute("autofocus", "autofocus");
 textArea.setAttribute("placeholder", "Start writing...");
 
 keyboard.classList.add("keyboard");
@@ -47,8 +52,14 @@ function createKey(arr) {
     for (let i = 0; i < arr.length; i++) {
         let keyButton = document.createElement("button");
         keyButton.setAttribute("id", `${arr[i].id}`);
-        keyButton.innerText = `${arr[i].key}`;
+        keyButton.classList.add("btn");
         keyButton.classList.add("key");
+        if (keyButton.textContent) {
+            keyButton.innerText = keyButton.textContent;
+        } else {
+            keyButton.innerText = `${arr[i].key}`;
+        }
+
         keyboard.appendChild(keyButton);
     }
     try {
@@ -67,8 +78,8 @@ createKey(keyArr);
 document.addEventListener("keydown", (event) => {
     let eventCode = document.querySelector(`#${event.code}`);
     console.log(event);
+    console.log(event.code);
     if (
-        event.code == "Tab" ||
         event.code === "Delete" ||
         event.key === "Shift" ||
         event.key === "Ctrl" ||
@@ -84,13 +95,11 @@ document.addEventListener("keydown", (event) => {
         textArea.value += "\n";
     } else if (event.code === "Backspace") {
         textArea.innerText = textArea.innerText.slice(0, -1);
-    } else {
-        textArea.innerText += event.key;
     }
+
     eventCode.classList.add("active");
 
     soundTag.play();
-    console.log(event.code);
     if (event.code === "ShiftLeft") {
         greenRound.classList.toggle("green");
     } else if (event.code === "CapsLock") {
@@ -105,9 +114,111 @@ document.addEventListener("click", () => {
 document.addEventListener("keyup", (event) => {
     let eventCode = document.querySelector(`#${event.code}`);
     eventCode.classList.remove("active");
-    if (event.code === "ShiftLeft") {
-        greenRound.classList.toggle("green");
-    } else if (event.code === "CapsLock") {
-        orangeRound.classList.toggle("orange");
+    // if (event.code === "ShiftLeft") {
+    //     greenRound.classList.toggle("green");
+    // } else if (event.code === "CapsLock") {
+    //     orangeRound.classList.toggle("orange");
+    // }
+});
+
+//change language
+document.addEventListener("keydown", function (event) {
+    if (event.shiftKey && event.altKey) {
+      ukFlag.classList.toggle('flag_pol')
+    }
+    
+});
+//flags
+const space = document.querySelector("#Space");
+space.append(ukFlag)
+let shiftPressed = false;
+document.addEventListener("keydown", function (event) {
+    if (event.shiftKey) {
+        shiftPressed = true;
     }
 });
+
+document.addEventListener("keyup", function (event) {
+    if (event.key === "Shift") {
+        shiftPressed = false;
+    }
+});
+
+// when a key is pressed, update its text content based on the shiftPressed flag
+document.querySelectorAll(".btn").forEach(function (key) {
+    key.addEventListener("click", function () {
+        let letter = key.textContent;
+        if (shiftPressed) {
+            letter = letter.toUpperCase();
+        }
+        // do something with the updated letter value
+    });
+});
+
+
+
+//arrows
+document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowUp") {
+        event.preventDefault();
+        const cursorPosition = textArea.selectionStart;
+        const text = textArea.value;
+        textArea.value =
+            text.substring(0, cursorPosition) +
+            "↑" +
+            text.substring(cursorPosition); // insert the "↑" symbol at the cursor position
+        textArea.selectionEnd = cursorPosition + 1; // move the cursor one position to the right
+    }
+});
+document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowDown") {
+        event.preventDefault();
+        const cursorPosition = textArea.selectionStart;
+        const text = textArea.value;
+        textArea.value =
+            text.substring(0, cursorPosition) +
+            "↓" +
+            text.substring(cursorPosition); // insert the "↑" symbol at the cursor position
+        textArea.selectionEnd = cursorPosition + 1; // move the cursor one position to the right
+    }
+});
+document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowRight") {
+        event.preventDefault();
+        const cursorPosition = textArea.selectionStart;
+        const text = textArea.value;
+        textArea.value =
+            text.substring(0, cursorPosition) +
+            "→" +
+            text.substring(cursorPosition); // insert the "↑" symbol at the cursor position
+        textArea.selectionEnd = cursorPosition + 1; // move the cursor one position to the right
+    }
+});
+document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        const cursorPosition = textArea.selectionStart;
+        const text = textArea.value;
+        textArea.value =
+            text.substring(0, cursorPosition) +
+            "←" +
+            text.substring(cursorPosition); // insert the "↑" symbol at the cursor position
+        textArea.selectionEnd = cursorPosition + 1; // move the cursor one position to the right
+    }
+});
+
+//tab
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Tab") {
+        event.preventDefault();
+        const cursorPosition = textArea.selectionStart;
+        const text = textArea.value;
+        textArea.value =
+            text.substring(0, cursorPosition) +
+            "\t" +
+            text.substring(cursorPosition);
+        textArea.selectionEnd = cursorPosition + 4;
+    }
+});
+
+
