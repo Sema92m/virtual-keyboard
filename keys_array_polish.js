@@ -1,4 +1,4 @@
-const keyArr = [
+const keyArrPolish = [
   {
       id: "Backquote",
       key: "`",
@@ -100,7 +100,7 @@ const keyArr = [
   },
   {
       id: "KeyE",
-      key: "ę",
+      key: "Ę",
       keyCode: "69",
   },
   {
@@ -130,7 +130,7 @@ const keyArr = [
   },
   {
       id: "KeyO",
-      key: " ó",
+      key: "Ó",
       keyCode: "79",
   },
   {
@@ -168,12 +168,12 @@ const keyArr = [
   },
   {
       id: "KeyA",
-      key: "ą",
+      key: "Ą",
       keyCode: "65",
   },
   {
       id: "KeyS",
-      key: "ś",
+      key: "Ś",
       keyCode: "83",
   },
   {
@@ -208,7 +208,7 @@ const keyArr = [
   },
   {
       id: "KeyL",
-      key: "ł",
+      key: "Ł",
       keyCode: "76",
   },
   {
@@ -236,17 +236,17 @@ const keyArr = [
 
   {
       id: "KeyZ",
-      key: "ż",
+      key: "Ż",
       keyCode: "90",
   },
   {
       id: "KeyX",
-      key: "ź",
+      key: "Ź",
       keyCode: "88",
   },
   {
       id: "KeyC",
-      key: "ć",
+      key: "Ć",
       keyCode: "67",
   },
   {
@@ -261,7 +261,7 @@ const keyArr = [
   },
   {
       id: "KeyN",
-      key: "ń",
+      key: "Ń",
       keyCode: "78",
   },
   {

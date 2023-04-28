@@ -1,8 +1,8 @@
 const body = document.body;
+// let lang = 'English';
 const mainSection = document.createElement("section");
 const keyboard = document.createElement("div");
 const textArea = document.createElement("textarea");
-
 
 const h1 = document.createElement("h1");
 h1.textContent = "Virtual Keyboard for Windows";
@@ -17,41 +17,35 @@ textArea.setAttribute("cols", "46");
 textArea.setAttribute("wrap", "hard");
 textArea.setAttribute("autofocus", "autofocus");
 textArea.setAttribute("placeholder", "Start writing...");
+textArea.classList.add("text-area");
 
 keyboard.classList.add("keyboard");
-textArea.classList.add("text-area");
 
 mainSection.append(h1);
 mainSection.append(p);
 mainSection.append(textArea);
 mainSection.append(keyboard);
 
-const greenRound = document.createElement("div");
-greenRound.classList.add("greenRound");
-
+//capslock indikator
 const orangeRound = document.createElement("div");
 orangeRound.classList.add("orangeRound");
 
 //sound
 const soundTag = document.createElement("audio");
-soundTag.setAttribute("id", "click-sound");
-const soundSourceTag = document.createElement("source");
-soundSourceTag.setAttribute("src", "./button-click.mp3");
-soundSourceTag.setAttribute("type", "audio/mp3");
-soundTag.append(soundSourceTag);
-mainSection.append(soundTag);
-//sound
 
+// createKey(keyArr);
+start();
 //create keys
 function createKey(arr) {
+    keyboard.innerHTML = "";
     for (let i = 0; i < arr.length; i++) {
         let keyButton = document.createElement("button");
         let keyButtonKey2 = document.createElement("p");
 
         keyButton.setAttribute("id", `${arr[i].id}`);
         keyButton.classList.add("btn");
-        keyButton.classList.add("key");
 
+        keyButton.style.background = hexaColor();
         keyButtonKey2.classList.add("key2");
         keyButtonKey2.textContent = arr[i].key2;
 
@@ -66,47 +60,76 @@ function createKey(arr) {
         keyboard.appendChild(keyButton);
     }
     try {
-        // const shiftLeft = document.querySelector("#ShiftLeft");
-        // shiftLeft.style.position = "relative";
-        // shiftLeft.append(greenRound);
-
         const capsLock = document.querySelector("#CapsLock");
         capsLock.style.position = "relative";
         capsLock.append(orangeRound);
     } catch (err) {
         console.log(err);
     }
+    const ukFlag = document.createElement("div");
+    ukFlag.setAttribute("class", "flag");
+    const space = document.querySelector("#Space");
+    space.append(ukFlag);
 }
-createKey(keyArr);
+createAudio();
 
 document.addEventListener("keydown", (event) => {
-  textArea.focus()
+    const ukFlag = document.querySelector(".flag");
+    textArea.focus();
     let eventCode = document.querySelector(`#${event.code}`);
+    eventCode.classList.add("active"); //active class for button
     console.log(event);
     // console.log(event.code);
-    if (
-        event.code === "Delete" ||
-        event.key === "Shift" ||
-        event.key === "Ctrl" ||
-        event.key === "Alt" ||
-        event.key === "Win" ||
-        event.key === "Space"
-    ) {
-        event.preventDefault();
-        textArea.innerText += "";
-    } else if (event.code === "Enter") {
+    if (event.code === "Enter") {
         event.preventDefault();
         console.log(textArea.value);
         textArea.value += "\n";
     } else if (event.code === "Backspace") {
         textArea.innerText = textArea.innerText.slice(0, -1);
     }
-
-    eventCode.classList.add("active");
+    //caps
     if (event.code === "CapsLock") {
         orangeRound.classList.toggle("orange");
     }
-
+    //del+tab
+    const cursorPosition = textArea.selectionStart;
+    if (event.key === "Tab") {
+        event.preventDefault();
+        const text = textArea.value;
+        textArea.value =
+            text.substring(0, cursorPosition) +
+            "    " +
+            text.substring(cursorPosition);
+    }
+    if (event.key === "Delete") {
+        const end = textArea.selectionEnd;
+        if (cursorPosition === end) {
+            textArea.value =
+                textArea.value.slice(0, cursorPosition) +
+                textArea.value.slice(cursorPosition + 1);
+            textArea.setSelectionRange(cursorPosition, cursorPosition);
+        } else {
+            textArea.value =
+                textArea.value.slice(0, cursorPosition) +
+                textArea.value.slice(end);
+            textArea.setSelectionRange(cursorPosition, cursorPosition);
+        }
+        event.preventDefault();
+    }
+    //change lang
+    if (event.ctrlKey && event.altKey) {
+        if (localStorage.getItem("language") !== "Polish") {
+            createKey(keyArrPolish);
+            const ukFlag = document.querySelector(".flag");
+            ukFlag.classList.add("flag_pol");
+            localStorage.setItem("language", "Polish");
+        } else if (localStorage.getItem("language") !== "English") {
+            createKey(keyArr);
+            const ukFlag = document.querySelector(".flag");
+            ukFlag.classList.remove("flag_pol");
+            localStorage.setItem("language", "English");
+        }
+    }
     soundTag.play();
 });
 
@@ -114,9 +137,8 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keyup", (event) => {
     let eventCode = document.querySelector(`#${event.code}`);
     eventCode.classList.remove("active");
-    textArea.focus()
+    textArea.focus();
 });
-
 
 //shft=>UpperCase
 document.querySelectorAll(".btn").forEach(function (key) {
@@ -125,99 +147,66 @@ document.querySelectorAll(".btn").forEach(function (key) {
         if (shiftPressed) {
             letter = letter.toUpperCase();
         }
-        
     });
 });
-
 
 //arrows
 document.addEventListener("keydown", function (event) {
     if (event.key === "ArrowUp") {
-        event.preventDefault();
-        const cursorPosition = textArea.selectionStart;
-        const text = textArea.value;
-        textArea.value =
-            text.substring(0, cursorPosition) +
-            "↑" +
-            text.substring(cursorPosition); // insert the "↑" symbol at the cursor position
-        textArea.selectionEnd = cursorPosition + 1; // move the cursor one position to the right
-    }
-});
-document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowDown") {
-        event.preventDefault();
-        const cursorPosition = textArea.selectionStart;
-        const text = textArea.value;
-        textArea.value =
-            text.substring(0, cursorPosition) +
-            "↓" +
-            text.substring(cursorPosition); // insert the "↑" symbol at the cursor position
-        textArea.selectionEnd = cursorPosition + 1; // move the cursor one position to the right
-    }
-});
-document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowRight") {
-        event.preventDefault();
-        const cursorPosition = textArea.selectionStart;
-        const text = textArea.value;
-        textArea.value =
-            text.substring(0, cursorPosition) +
-            "→" +
-            text.substring(cursorPosition); // insert the "↑" symbol at the cursor position
-        textArea.selectionEnd = cursorPosition + 1; // move the cursor one position to the right
-    }
-});
-document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        const cursorPosition = textArea.selectionStart;
-        const text = textArea.value;
-        textArea.value =
-            text.substring(0, cursorPosition) +
-            "←" +
-            text.substring(cursorPosition); // insert the "↑" symbol at the cursor position
-        textArea.selectionEnd = cursorPosition + 1; // move the cursor one position to the right
+        arrowsEvent(event, "↑");
+    } else if (event.key === "ArrowDown") {
+        arrowsEvent(event, "↓");
+    } else if (event.key === "ArrowRight") {
+        arrowsEvent(event, "→");
+    } else if (event.key === "ArrowLeft") {
+        arrowsEvent(event, "←");
     }
 });
 
-//tab
-document.addEventListener("keydown", function (event) {
-    if (event.key === "Tab") {
-        event.preventDefault();
-        const cursorPosition = textArea.selectionStart;
-        const text = textArea.value;
-        textArea.value =
-            text.substring(0, cursorPosition) +
-            "\t" +
-            text.substring(cursorPosition);
-        textArea.selectionEnd = cursorPosition + 4;
-    }
-});
-
-
-
-//flags, must be here, more in additional.js
-const space = document.querySelector("#Space");
-space.append(ukFlag);
-
-
-
-
-
-
-// Get the current text selection in the input field
-var selectionStart = textArea.selectionStart;
-var selectionEnd = textArea.selectionEnd;
-console.log(selectionStart)
-// Delete the selected text (if any)
-if (selectionStart !== selectionEnd) {
-  textArea.value = textArea.value.slice(0, selectionStart) + textArea.value.slice(selectionEnd);
-  textArea.selectionStart = textArea.selectionEnd = selectionStart;
-}
-// Delete the character after the text cursor
-else {
-  textArea.value = textArea.value.slice(0, selectionStart) + textArea.value.slice(selectionStart + 1);
+//function for arrows when arrow arg is arrow symbol as a string "←"
+function arrowsEvent(event, arrow) {
+    event.preventDefault();
+    const cursorPosition = textArea.selectionStart;
+    const text = textArea.value;
+    textArea.value =
+        text.substring(0, cursorPosition) +
+        `${arrow}` +
+        text.substring(cursorPosition); // insert "↑" symbol at the cursor position
+    textArea.selectionEnd = cursorPosition + 1; // move cursor one position to the right
 }
 
-// Set the focus back to the input field
-textArea.focus();
+document.addEventListener("click", () => {
+    soundTag.play();
+});
+
+//change language
+
+// function flagFromStorage() {
+//     const ukFlag = document.querySelector(".flag");
+//     if (localStorage.getItem("language") === "Polish") {
+//         ukFlag.classList.add("flag_pol");
+//         // localStorage.setItem("language", "English");
+//         createKey(keyArrPolish);
+//     } else if (localStorage.getItem("language") === "English") {
+//         ukFlag.classList.remove("flag_pol");
+//         // localStorage.setItem("language", "Polish");
+//         createKey(keyArr);
+//     }
+// }
+
+function start() {
+    if (
+        localStorage.getItem("language") === "English" ||
+        !localStorage.getItem("language")
+    ) {
+        createKey(keyArr);
+        localStorage.setItem("language", "English");
+        const ukFlag = document.querySelector(".flag");
+        ukFlag.classList.remove("flag_pol");
+    }
+    if (localStorage.getItem("language") === "Polish") {
+        createKey(keyArrPolish);
+        const ukFlag = document.querySelector(".flag");
+        ukFlag.classList.add("flag_pol");
+    }
+}
