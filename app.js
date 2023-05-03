@@ -781,14 +781,15 @@ createAudio();
 document.addEventListener("keydown", (event) => {
     const ukFlag = document.querySelector(".flag");
     textArea.focus();
+
     let eventCode = document.querySelector(`#${event.code}`);
+    console.dir(event);
     if (eventCode) {
         eventCode.classList.add("active");
         textArea.focus();
     }
     if (event.code === "Enter") {
         event.preventDefault();
-        console.log(textArea.value);
         textArea.value += "\n";
     } else if (event.code === "Backspace") {
         textArea.innerText = textArea.innerText.slice(0, -1);
@@ -801,11 +802,10 @@ document.addEventListener("keydown", (event) => {
     const cursorPosition = textArea.selectionStart;
     if (event.key === "Tab") {
         event.preventDefault();
-        const text = textArea.value;
         textArea.value =
-            text.substring(0, cursorPosition) +
+            textArea.value.substring(0, cursorPosition) +
             "    " +
-            text.substring(cursorPosition);
+            textArea.value.substring(cursorPosition);
     }
     if (event.key === "Delete") {
         const end = textArea.selectionEnd;
@@ -928,31 +928,38 @@ function createAudio() {
 document.addEventListener("click", function (event) {
     if (event.target.nodeName === "BUTTON") {
         const char = event.target.textContent;
+        console.dir(event.target);
         if (char === "Space") {
-            char = " ";
-        }
-        if (char === "Alt") {
-            char = "";
-        }
-        if (char === "CapLock") {
-            char = "";
-        }
-        if (char === "Enter") {
-            char = "\n";
-        }
-        if (char === "Tab") {
-            char = "    ";
-        }
-        if (char === "Control") {
-            char = "";
-        }
-        textArea.value += char.toLowerCase();
-        if (char === "Shift") {
-            isShiftPressed = !isShiftPressed;
-            return;
-        } else if (isShiftPressed) {
-            char = char.toUpperCase();
-            isShiftPressed = false;
+            textArea.value += "";
+        } else if (char === "Alt") {
+            textArea.value += "";
+        } else if (char === "CapsLock") {
+            textArea.value += "";
+        } else if (char === "Backspace") {
+            textArea.value = textArea.value.slice(0, -1);
+        } else if (char === "Delete") {
+            if (cursorPosition === end) {
+                textArea.value =
+                    textArea.value.slice(0, cursorPosition) +
+                    textArea.value.slice(cursorPosition + 1);
+                textArea.setSelectionRange(cursorPosition, cursorPosition);
+            } else {
+                textArea.value =
+                    textArea.value.slice(0, cursorPosition) +
+                    textArea.value.slice(end);
+                textArea.setSelectionRange(cursorPosition, cursorPosition);
+            }
+        } else if (char === "Enter") {
+            event.preventDefault();
+            textArea.value += "\n";
+        } else if (char === "Tab") {
+            textArea.value += "    ";
+        } else if (char === "Ctrl") {
+            textArea.value += "";
+        } else if (char === "Shift") {
+            textArea.value += "";
+        } else {
+            textArea.value += char.toLowerCase().slice(0, 1);
         }
     }
 });
