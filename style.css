@@ -1,0 +1,176 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    transition: transform 0.2s;
+    transition: background 0.3s;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+.main {
+    max-width: 1124px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 5px;
+    background: lightgray;
+}
+.text-area {
+    /* width === textArea.cols in js */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    background: #fff3f3;
+    border-radius: 5px;
+    padding: 10px;
+    caret-color: red;
+}
+
+.keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.btn {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 30px;
+    font-weight: 500;
+    background: #fff3f3;
+    box-shadow: 3px 3px 3px #999;
+    cursor: pointer;
+}
+
+.btn::before {
+    content: var(--before-content);
+}
+
+.btn:hover {
+    background-color: #dcdddc;
+    transform: scale(1.02);
+}
+
+.btn:active {
+    background-color: #dcdddc;
+    box-shadow: 1px 1px 1px #666;
+    transform: translate(1px, 1px);
+}
+
+.key2 {
+    position: absolute;
+    font-size: 14px;
+    left: 5px;
+    top: 5px;
+    font-weight: 900;
+}
+
+.active {
+    background-color: #dcdddc;
+    box-shadow: 1px 1px 1px #666;
+    transform: translate(1px, 1px);
+}
+#ArrowUp,#ArrowLeft,#ArrowDown,#ArrowRight {
+  color: #fff;
+}
+
+#Backspace,
+#ShiftLeft,
+#ShiftRight,
+#ControlLeft,
+#AltLeft,
+#AltRight,
+#ControlRight,
+#Tab,
+#Delete,
+#Win,
+#Space,
+#CapsLock,
+#Enter {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+#Backspace {
+    width: 120px;
+}
+#ShiftLeft {
+    width: 160px;
+}
+
+#ControlLeft,
+#AltLeft,
+#AltRight,
+#ControlRight,
+#Tab,
+#Delete,
+#ShiftRight {
+    width: 70px;
+}
+
+#Space {
+  background: #d49500;
+    width: 450px;
+}
+
+#CapsLock {
+    width: 100px;
+}
+
+#Enter {
+    width: 140px;
+}
+
+.greenRound,
+.orangeRound {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    background-color: #cfcfcf;
+}
+
+#CapsLock:active .orangeRound,
+.orange {
+    background-color: rgb(252, 96, 39);
+}
+
+.flag {
+    width: 50px;
+    height: 40px;
+    transform: translateX(160px);
+    background-image: url("./uk_flag.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.flag_pol {
+    background-image: url("./pol_flag.svg");
+}
