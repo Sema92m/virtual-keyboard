@@ -3,6 +3,9 @@ const mainSection = document.createElement("section");
 const keyboard = document.createElement("div");
 const textArea = document.createElement("textarea");
 
+const cursorPosition = textArea.selectionStart;
+const end = textArea.selectionEnd;
+
 const h1 = document.createElement("h1");
 h1.textContent = "Virtual Keyboard for Windows";
 const p = document.createElement("p");
@@ -779,9 +782,7 @@ function createKey(arr) {
 createAudio();
 
 document.addEventListener("keydown", (event) => {
-    const ukFlag = document.querySelector(".flag");
     textArea.focus();
-
     let eventCode = document.querySelector(`#${event.code}`);
     console.dir(event);
     if (eventCode) {
@@ -808,7 +809,6 @@ document.addEventListener("keydown", (event) => {
             textArea.value.substring(cursorPosition);
     }
     if (event.key === "Delete") {
-        const end = textArea.selectionEnd;
         if (cursorPosition === end) {
             textArea.value =
                 textArea.value.slice(0, cursorPosition) +
